@@ -5,6 +5,7 @@ import appStore from './appStore.svg'
 import screenImage from './screenImage.svg'
 import profile from './profile.png'
 import Code_Generated_Image from './Code_Generated_Image.png'
+import backgroundImage from './backgroundImage.png'
 
 export const assets = {
     logo,
@@ -13,7 +14,8 @@ export const assets = {
     appStore,
     screenImage,
     profile,
-    Code_Generated_Image
+    Code_Generated_Image,
+    backgroundImage
 }
 
 export const dummyTrailers = [

@@ -1,14 +1,17 @@
 import React from "react";
 import Navbar from "./components/Navbar";
+
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/home";
+
 import MovieDetails from "./pages/MovieDetails";
 import MyBookings from "./pages/MyBookings";
-import Favourite from "./pages/Favorite";
+import Favourite from "./pages/Favourite";
 import SeatLayout from "./pages/SeatLayout";
 import Movies from "./pages/Movies";
 import { Toaster } from "react-hot-toast";
 import Footer from "./components/Footer";
+
 const App = () =>{
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
   return(
