@@ -1,12 +1,15 @@
 import { ChartLineIcon, CircleDollarSignIcon, PlayCircleIcon, StarIcon, UsersIcon } from 'lucide-react';
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, use} from 'react'
 import LoadingAni from '../../components/LoadingAni';
 import Title from '../../components/admin/Title';
 import { dummyDashboardData } from '../../assets/assets';
 import BlurRedCircle from '../../components/BlurRedCircle';
 import { dateFormat } from '../../lib/dateFormat';
+import { useAppContext } from '../../../context/AppContext';
+import toast from 'react-hot-toast';
 const Dashboard = () => {
-const currency = import.meta.env.VITE_CURRENCY
+    const {axios, getToken, user, image_base_url} = useAppContext()
+    const currency = import.meta.env.VITE_CURRENCY
 
 const [dashboardData, setDashboardData] = useState({
     totalBookings: 0,
@@ -41,13 +44,30 @@ const dashboardCards = [
 ]
 
 const fetchDashboardData = async () => {
-  setDashboardData(dummyDashboardData)
-  setLoading(false)
+    try{
+        const{data} = await axios.get('/api/admin/dashboard', {
+            headers: {
+                Authorization: `Bearer ${await getToken()}`
+            }
+        })
+        if(data.success){
+            setDashboardData(data.dashboardData)
+            setLoading(false)
+        }
+        else{
+            toast.error(data.message)
+        }
+    }catch(error){
+        toast.error("Error fetching dashboard data:", error)
+    }  
 };
 
   useEffect(() => {
-  fetchDashboardData();
-  }, []);
+    if(user){
+        fetchDashboardData()
+    }
+  
+  }, [user]);
 
   return !loading ? (
     <>
@@ -93,7 +113,7 @@ const fetchDashboardData = async () => {
         >
 
             <img
-                src={show.movie.poster_path}
+                src={ image_base_url + show.movie.poster_path}
                 alt=""
                 className="h-60 w-full object-cover"
             />
