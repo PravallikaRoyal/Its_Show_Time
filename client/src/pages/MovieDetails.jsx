@@ -139,9 +139,8 @@ favoriteMovies.some(
                 <div key={index} className="flex flex-col items-center text-center">
                <img
                 src={
-                cast.profile_path
-                ? image_base_url + cast.profile_path
-                : "https://via.placeholder.com/150?text=No+Image"
+                image_base_url + cast.profile_path
+                
               }
               alt={cast.name}
               className='rounded-full h-20 md:h-20 aspect-square object-cover'

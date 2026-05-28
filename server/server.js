@@ -3,17 +3,21 @@ import cors from 'cors';
 import 'dotenv/config';
 import connectDB from './configs/db.js';
 import {clerkMiddleware} from '@clerk/express'
-import { serve  } from 'inngest/express';
+import {serve} from 'inngest/express';
 import { functions, inngest } from './inngest/index.js';
 import showRouter from './routes/showRoutes.js';
 import bookingRouter from './routes/bookingRoutes.js';
 import adminRouter from './routes/adminRouter.js';
 import userRouter from './routes/userRoutes.js';
+import { stripeWebhooks } from './controllers/stripeWebHooks.js';
 
 const app = express();
 const port = 3000;
 
 await connectDB();
+
+//Stripe webhooks route
+app.use('/api/stripe', express.raw({type:'application/json'}), stripeWebhooks)
 
 //Middleware
 app.use(express.json());
